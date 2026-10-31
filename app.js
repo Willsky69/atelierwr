@@ -8,12 +8,13 @@ const HORLOGERIE = W('horlogerie', 12, ['Panthère, haute joaillerie · Cartier'
 
 const JEWELRY_GALLERY = [
   { src: 'assets/work/horlogerie-08.jpg', title: 'Collection Interstice', client: 'Planche complète des dessins' },
-  { src: 'https://static.wixstatic.com/media/223f51_aee806852e38479c92a34c0edd117975~mv2_d_3508_4961_s_4_2.jpg', title: 'Collection Interstice', client: 'Mockup 01' },
-  { src: 'https://static.wixstatic.com/media/223f51_0ffcf5558bfd4da49fe86f08e864ea46~mv2_d_3508_2480_s_4_2.jpg', title: 'Collection Interstice', client: 'Mockup 02' },
-  { src: 'https://static.wixstatic.com/media/223f51_5add9772df6a4ef4ab69d588b8fffce8~mv2.jpg', title: 'Collection Interstice', client: 'Mockup 03' },
-  { src: 'https://static.wixstatic.com/media/223f51_1e1628b9480b480a877ff0be5b58c60a~mv2.png', title: 'Collection Interstice', client: 'Mockup 04' },
-  { src: 'https://static.wixstatic.com/media/223f51_bfd0a91ae1964668a80ec4f594579050~mv2_d_3508_2480_s_4_2.png', title: 'Collection Interstice', client: 'Mockup 05' },
-  { src: 'https://static.wixstatic.com/media/223f51_27c54311b8f3443eb247638db929905c~mv2_d_3508_2480_s_4_2.png', title: 'Collection Interstice', client: 'Mockup 06' },
+  { src: 'https://static.wixstatic.com/media/223f51_342bf6a054fb4d5c8a0f1b245d35b071~mv2.png', title: 'Collection Interstice', client: 'Mockups de bijoux géométriques' },
+  { src: document.querySelector('.jewelry-cardholder img')?.src || '', title: 'Porte-cartes sécurisé', client: 'Décors en laque, métal et diamants' },
+];
+
+const OTHER_WATCH_GALLERY = [
+  { src: 'https://static.wixstatic.com/media/223f51_aa85ebe2fe2e4dde92cd0b90a2735d4b~mv2.png', title: 'HILAL — Moonphase Collection', client: 'Collection complète' },
+  { src: 'https://static.wixstatic.com/media/223f51_07bb9e0eb6c149fd94e036b44599ac63~mv2.png', title: 'HILAL — Moonphase Collection', client: 'Cadran rayonnant et phase de lune' },
 ];
 
 const DESIGN = [
@@ -93,6 +94,7 @@ lb.querySelector('.lb-prev').onclick = e => { e.stopPropagation(); lbIndex = (lb
 lb.querySelector('.lb-next').onclick = e => { e.stopPropagation(); lbIndex = (lbIndex + 1) % lbList.length; showLb(); };
 lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
 document.querySelectorAll('[data-jewelry-i]').forEach(button => button.addEventListener('click', () => openLb(JEWELRY_GALLERY, +button.dataset.jewelryI)));
+document.querySelectorAll('[data-other-watch-i]').forEach(button => button.addEventListener('click', () => openLb(OTHER_WATCH_GALLERY, +button.dataset.otherWatchI)));
 document.addEventListener('keydown', e => {
   if (!lb.classList.contains('open')) return;
   if (e.key === 'Escape') closeLb();
