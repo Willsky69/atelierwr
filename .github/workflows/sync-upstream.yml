@@ -1,5 +1,5 @@
 name: Synchroniser automatiquement le site
-# Publication onglet Lemarys : 2026-11-02-1512
+# Publication raccourcis rouges : 2026-11-02-1528
 
 on:
   push:
