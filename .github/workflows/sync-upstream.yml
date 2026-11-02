@@ -1,6 +1,11 @@
 name: Synchroniser automatiquement le site
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/sync-upstream.yml"
   schedule:
     - cron: "*/5 * * * *"
   workflow_dispatch:
