@@ -1,4 +1,5 @@
 name: Synchroniser automatiquement le site
+# Publication Lemarys : 2026-11-02-1307
 
 on:
   push:
