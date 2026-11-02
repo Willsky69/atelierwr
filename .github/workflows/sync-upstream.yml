@@ -1,5 +1,5 @@
 name: Synchroniser automatiquement le site
-# Publication projet Lunetterie : 2026-11-02-1636
+# Publication liens directs : 2026-11-02-1658
 
 on:
   push:
