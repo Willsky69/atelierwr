@@ -1,5 +1,5 @@
 name: Synchroniser automatiquement le site
-# Publication Lemarys : 2026-11-02-1307
+# Publication bandeau catégories : 2026-11-02-1358
 
 on:
   push:
