@@ -1,5 +1,5 @@
 name: Synchroniser automatiquement le site
-# Publication raccourcis rouges : 2026-11-02-1528
+# Publication projet Lunetterie : 2026-11-02-1636
 
 on:
   push:
