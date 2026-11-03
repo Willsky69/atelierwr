@@ -1,5 +1,5 @@
 name: Synchroniser automatiquement le site
-# Publication visuels Lemarys corrigés : 2026-11-03-1425
+# Publication texte Lemarys adapté : 2026-11-03-1445
 
 on:
   push:
