@@ -1,5 +1,5 @@
 name: Synchroniser automatiquement le site
-# Publication texte Lemarys adapté : 2026-11-03-1445
+# Publication Lemarys, sac à chaîne en visuel 1 : 2026-11-03-1540
 
 on:
   push:
