@@ -1,5 +1,5 @@
 name: Synchroniser automatiquement le site
-# Publication visuels Lemarys corrigés : 2026-11-03-1410
+# Publication visuels Lemarys corrigés : 2026-11-03-1425
 
 on:
   push:
@@ -44,6 +44,7 @@ jobs:
           git config user.name "Atelier WR — publication automatique"
           git config user.email "actions@users.noreply.github.com"
           git merge --no-edit upstream/main
-          git rm -f .github/workflows/inventory-bags.yml .github/workflows/import-lemarys.yml 2>/dev/null || true
+          git rm -f --ignore-unmatch .github/workflows/inventory-bags.yml
+          git rm -f --ignore-unmatch .github/workflows/import-lemarys.yml
           git commit --amend --no-edit
           git push origin main
