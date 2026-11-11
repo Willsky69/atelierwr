@@ -110,7 +110,6 @@ const INK_WORKS = [
   { src: "assets/ig/15-baigneuses-rochers.jpg", title: "Baigneuses sur les rochers", client: "Illustration · Marseille" },
   { src: "assets/ig/14-marseille-bleu-orange.jpg", title: "Marseille, bleu et orange", client: "Illustration · Marseille" },
   { src: "assets/ig/13-coucher-soleil-marseille.jpg", title: "Marseille au soleil couchant", client: "Illustration · Marseille" },
-  { src: "assets/ig/01-poster-demain.jpg", title: "Lovely Messy Massilia", client: "Feutre et encre · A4" },
   { src: "assets/ig/02-baigneuse-rocher.jpg", title: "Baigneuse sur les rochers", client: "Feutre et encre · A4" },
   { src: "assets/ig/03-bain-montagne.jpg", title: "Bain de montagne", client: "Feutre et encre · A4" },
   { src: "assets/ig/04-soleil-couchant.jpg", title: "Soleil couchant", client: "Feutre et encre · A4" },
@@ -606,10 +605,34 @@ function observeCards(root) {
 const lb = document.getElementById('lb');
 const lbImg = lb.querySelector('img');
 const lbCap = lb.querySelector('.lb-cap');
+const lbCounter = lb.querySelector('.lb-counter');
+const lbZoomIn = lb.querySelector('.lb-zoom-in');
+const lbZoomOut = lb.querySelector('.lb-zoom-out');
+const lbZoomReset = lb.querySelector('.lb-zoom-reset');
+let lbScale = 1;
+function setLbZoom(scale) {
+  lbScale = Math.max(1, Math.min(2.5, Math.round(scale * 10) / 10));
+  lbImg.style.transform = `scale(${lbScale})`;
+  lb.classList.toggle('is-zoomed', lbScale > 1);
+  lbZoomOut.disabled = lbZoomReset.disabled = lbScale === 1;
+  lbZoomIn.disabled = lbScale >= 2.5;
+  lbZoomReset.textContent = `${Math.round(lbScale * 100)} %`;
+}
+lbZoomIn.onclick = () => setLbZoom(lbScale + 0.25);
+lbZoomOut.onclick = () => setLbZoom(lbScale - 0.25);
+lbZoomReset.onclick = () => setLbZoom(1);
+lbImg.addEventListener('click', () => setLbZoom(lbScale >= 2.5 ? 1 : lbScale + 0.5));
+lbImg.addEventListener('wheel', e => {
+  if (!lb.classList.contains('open')) return;
+  e.preventDefault();
+  setLbZoom(lbScale + (e.deltaY < 0 ? 0.25 : -0.25));
+}, { passive: false });
 function openLb(list, i) { lbList = list; lbIndex = i; showLb(); lb.classList.add('open'); document.body.classList.add('no-scroll'); }
 const escapeHtml = value => String(value || '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
 function showLb() {
+  setLbZoom(1);
   const it = lbList[lbIndex];
+  lbCounter.textContent = `${lbIndex + 1} / ${lbList.length}`;
   lbImg.src = it.src;
   lbImg.alt = it.title;
   lb.classList.toggle('has-long-caption', Boolean(it.caption));
@@ -622,6 +645,16 @@ lb.querySelector('.lb-close').onclick = closeLb;
 lb.querySelector('.lb-prev').onclick = e => { e.stopPropagation(); lbIndex = (lbIndex - 1 + lbList.length) % lbList.length; showLb(); };
 lb.querySelector('.lb-next').onclick = e => { e.stopPropagation(); lbIndex = (lbIndex + 1) % lbList.length; showLb(); };
 lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+let lbTouchStartX = null;
+lb.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) lbTouchStartX = e.touches[0].clientX;
+}, { passive: true });
+lb.addEventListener('touchend', e => {
+  if (lbTouchStartX === null || !e.changedTouches.length || lbScale > 1) return;
+  const delta = e.changedTouches[0].clientX - lbTouchStartX;
+  lbTouchStartX = null;
+  if (Math.abs(delta) > 55) lb.querySelector(delta < 0 ? '.lb-next' : '.lb-prev').click();
+}, { passive: true });
 document.querySelectorAll('[data-jewelry-i]').forEach(button => button.addEventListener('click', () => openLb(JEWELRY_GALLERY, +button.dataset.jewelryI)));
 document.addEventListener('keydown', e => {
   if (!lb.classList.contains('open')) return;
