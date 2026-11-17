@@ -1,0 +1,35 @@
+name: Vérifier la page Contact publique
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/check-contact-20261117.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-contact:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attendre et vérifier le déploiement
+        shell: bash
+        run: |
+          set -u
+          ok=0
+          for attempt in $(seq 1 18); do
+            cache_bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${attempt}"
+            if curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/prendre-contact?check=${cache_bust}" -o contact.html \
+              && grep -q 'data-contact-form' contact.html \
+              && grep -q 'contact-william-rigoulet.jpg' contact.html \
+              && grep -q 'william_rigoulet@hotmail.com' contact.html \
+              && curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/?check=${cache_bust}" -o home.html \
+              && grep -q 'href="prendre-contact.html"' home.html; then
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" -eq 1
