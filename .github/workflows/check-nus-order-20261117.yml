@@ -1,0 +1,36 @@
+name: Vérifier Nus et modèles vivants
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/check-nus-order-20261117.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vérifier ordre, titre et styles publics
+        shell: bash
+        run: |
+          set -u
+          ok=0
+          for attempt in $(seq 1 18); do
+            key="${GITHUB_RUN_ID}-${attempt}"
+            if curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/nus?check=${key}" -o nus.html \
+              && grep -q 'fineart-duotone-title' nus.html \
+              && grep -q '>Croquis</h2>' nus.html \
+              && grep -q '>Peintures</h2>' nus.html \
+              && grep -q 'Fine Art · 52 œuvres' nus.html \
+              && curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/fineart-pages.css?check=${key}" -o fineart.css \
+              && grep -q 'fineart-duotone-title span' fineart.css \
+              && grep -q 'fineart-gallery-group--paintings' fineart.css; then
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" -eq 1
