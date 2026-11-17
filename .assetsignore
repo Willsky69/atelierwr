@@ -1,0 +1,16 @@
+# Internal repository metadata must never be published as site assets
+.git
+.git/**
+
+# Local tooling and dependencies
+node_modules
+node_modules/**
+.wrangler
+.wrangler/**
+.DS_Store
+
+# Local secrets and environment variables
+.env
+.env.*
+.dev.vars
+.dev.vars.*
