@@ -1,0 +1,35 @@
+name: Vérifier la page Collaborer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/check-collaborer-20261117.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vérifier la page et le menu publics
+        shell: bash
+        run: |
+          set -u
+          ok=0
+          for attempt in $(seq 1 18); do
+            key="${GITHUB_RUN_ID}-${attempt}"
+            if curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/designer-graphiste-marseille?check=${key}" -o page.html \
+              && grep -q 'Designer et directeur artistique à Marseille' page.html \
+              && grep -q 'contact-william-rigoulet.jpg' page.html \
+              && grep -q 'Des collaborations humaines' page.html \
+              && curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/?check=${key}" -o home.html \
+              && grep -q 'designer-graphiste-marseille.html' home.html \
+              && grep -q '>Collaborer</a>' home.html; then
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" -eq 1
