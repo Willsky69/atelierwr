@@ -1,0 +1,35 @@
+name: Vérifier Le Solarium du Cercle
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/check-solarium-20261117.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vérifier la page et l’image publiques
+        shell: bash
+        run: |
+          set -u
+          ok=0
+          for attempt in $(seq 1 18); do
+            cache_bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${attempt}"
+            if curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/mes-dernieres-encres?check=${cache_bust}" -o page.html \
+              && grep -q '20-solarium-du-cercle.jpg' page.html \
+              && grep -q 'Le Solarium du Cercle' page.html \
+              && grep -q 'Fine Art · 18 œuvres' page.html \
+              && curl -fsSL --max-time 25 --retry 2 "https://atelierwr.net/assets/ig/20-solarium-du-cercle.jpg?check=${cache_bust}" -o image.jpg \
+              && test $(wc -c < image.jpg) -gt 100000; then
+              ok=1
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" -eq 1
