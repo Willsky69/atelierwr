@@ -1,0 +1,32 @@
+name: Vérifier le nouveau visuel Maison Boanton
+
+on:
+  push:
+    paths:
+      - ".github/workflows/check-boanton-details-20261118.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attendre et vérifier la page publiée
+        shell: bash
+        run: |
+          set -euo pipefail
+          PAGE="https://atelierwr.net/boanton.html?details=20261118-2"
+          ASSET="https://atelierwr.net/assets/work/boanton-dessiner-details-02.png?details=20261118-2"
+          for i in $(seq 1 60); do
+            html="$(curl -fsSL --max-time 30 "$PAGE" || true)"
+            code="$(curl -sSL -o /tmp/boanton-details.png -w "%{http_code}" --max-time 30 "$ASSET" || true)"
+            if printf "%s" "$html" | grep -q "assets/work/boanton-dessiner-details-02.png" \
+              && [ "$code" = "200" ] \
+              && [ -s /tmp/boanton-details.png ]; then
+              echo "Le nouveau visuel Maison Boanton est publié."
+              exit 0
+            fi
+            echo "Tentative $i/60 : déploiement en attente (image HTTP $code)."
+            sleep 10
+          done
+          echo "La version publique attendue n'est pas encore disponible."
+          exit 1
