@@ -78,6 +78,56 @@
 </div></div>
 <figure class="project-figure cabanes-plaque"><img alt="Blazon and name of the Castle of Cabanes engraved on a stone plaque" height="1400" loading="lazy" src="/assets/work/chateau-cabanes-plaque-pierre.jpg" width="990"/><figcaption>Clicking the logo on the stone signpost.</figcaption></figure>
 </section>
+<section class="project-section wrap" id="galerie-photos">
+<p class="eyebrow">06 · Identity in images</p>
+<h2>A universe <em>to be discovered.</em></h2>
+<p>A selection of situations and graphic variations of the Castle of Cabanes.</p>
+<style>
+    #galerie-photos .cabanes-photo-gallery{position:relative;margin-top:24px;background:#f7f3ed;overflow:hidden}
+    #galerie-photos .cabanes-photo-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+    #galerie-photos .cabanes-photo-track::-webkit-scrollbar{display:none}
+    #galerie-photos .cabanes-photo-slide{flex:0 0 100%;height:min(68vw,680px);min-height:300px;display:flex;align-items:center;justify-content:center;scroll-snap-align:start}
+    #galerie-photos .cabanes-photo-slide img{width:100%;height:100%;object-fit:contain;display:block}
+    #galerie-photos .cabanes-photo-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border:1px solid #672c32;background:#f7f3edeb;color:#672c32;font-size:26px;cursor:pointer;z-index:1}
+    #galerie-photos .cabanes-photo-prev{left:12px}#galerie-photos .cabanes-photo-next{right:12px}
+    #galerie-photos .cabanes-photo-count{position:absolute;right:16px;bottom:12px;padding:5px 10px;background:#f7f3edeb;color:#672c32;font-size:12px;letter-spacing:.1em}
+    @media(max-width:600px){#galerie-photos .cabanes-photo-slide{height:420px;min-height:0}#galerie-photos .cabanes-photo-arrow{width:36px;height:36px}}
+    @media(prefers-reduced-motion:reduce){#galerie-photos .cabanes-photo-track{scroll-behavior:auto}}
+  </style>
+<div aria-label="Photographic slide show of the Castle of Cabanes" class="cabanes-photo-gallery">
+<div class="cabanes-photo-track"><div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Graphic identity" loading="lazy" src="/assets/work/cabanes-01.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Wax Seal" loading="lazy" src="/assets/work/cabanes-02.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Bathroom" loading="lazy" src="/assets/work/cabanes-03.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Plate engraved" loading="lazy" src="/assets/work/cabanes-04.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Cabanes Castle — Bar" loading="lazy" src="/assets/work/cabanes-05.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Swimming pool" loading="lazy" src="/assets/work/cabanes-06.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Equestrian universe" loading="lazy" src="/assets/work/cabanes-07.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Gastronomy" loading="lazy" src="/assets/work/cabanes-08.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Guestbook" loading="lazy" src="/assets/work/cabanes-09.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Night reception" loading="lazy" src="/assets/work/cabanes-10.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Wine cellar" loading="lazy" src="/assets/work/cabanes-11.webp"/></div>
+<div class="cabanes-photo-slide"><img alt="Castle of Cabanes — Decorative patterns" loading="lazy" src="/assets/work/cabanes-12.webp"/></div></div>
+<button aria-label="Previous photo" class="cabanes-photo-arrow cabanes-photo-prev" type="button">‹</button>
+<button aria-label="Next photo" class="cabanes-photo-arrow cabanes-photo-next" type="button">›</button>
+<span aria-live="polite" class="cabanes-photo-count">01 / 12</span>
+</div>
+</section>
+<script>
+(() => {
+  const gallery=document.querySelector('#galerie-photos .cabanes-photo-gallery');
+  if(!gallery)return;
+  const track=gallery.querySelector('.cabanes-photo-track');
+  const slides=[...track.children],count=gallery.querySelector('.cabanes-photo-count');
+  let current=0,timer;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+  const go=n=>{current=(n+slides.length)%slides.length;track.scrollTo({left:current*track.clientWidth,behavior:reduced.matches?'instant':'smooth'});count.textContent=String(current+1).padStart(2,'0')+' / '+slides.length};
+  const restart=()=>{clearInterval(timer);if(!reduced.matches)timer=setInterval(()=>{if(!document.hidden&&!gallery.matches(':hover')&&!gallery.contains(document.activeElement))go(current+1)},5500)};
+  gallery.querySelector('.cabanes-photo-prev').addEventListener('click',()=>{go(current-1);restart()});
+  gallery.querySelector('.cabanes-photo-next').addEventListener('click',()=>{go(current+1);restart()});
+  track.addEventListener('scroll',()=>{current=Math.round(track.scrollLeft/Math.max(1,track.clientWidth));count.textContent=String(current+1).padStart(2,'0')+' / '+slides.length},{passive:true});
+  restart();
+})();
+</script>
 </main>
 <footer class="footer"><div class="wrap"><span>© Atelier WR · William Rigoulet · Marseille</span><a href="/en/logos-identites#chateau-cabanes">Back to logos and identities ↑</a></div></footer>
 <script defer="True" src="/en/language-switch.js"></script><script defer="True" src="/en/dynamic.js"></script></body>
