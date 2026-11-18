@@ -1,0 +1,26 @@
+name: Vérifier la nouvelle photo Collaborer
+on:
+  push:
+    paths:
+      - '.github/workflows/check-collaborer-photo-20261118.yml'
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attendre la publication et vérifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            page=$(curl -fsSL "https://atelierwr.net/designer-graphiste-marseille?photo=20261118-${GITHUB_RUN_ATTEMPT}-$attempt" || true)
+            code=$(curl -Lso /tmp/photo.png -w '%{http_code}' "https://atelierwr.net/assets/collaborer-william-rigoulet-20261118.png?photo=${GITHUB_RUN_ATTEMPT}-$attempt" || true)
+            if printf '%s' "$page" | grep -Fq 'assets/collaborer-william-rigoulet-20261118.png' \
+              && [ "$code" = "200" ] \
+              && [ -s /tmp/photo.png ]; then
+              echo "Nouvelle photo Collaborer publiée."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "La nouvelle photo n'est pas encore visible sur le site public." >&2
+          exit 1
