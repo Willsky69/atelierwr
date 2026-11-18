@@ -179,10 +179,61 @@
       </figure>
 
       <figure class="logo-project" id="chateau-cabanes">
-        <div class="logo-project-media logo-project-media--duo">
-          <img src="assets/work/chateau-cabanes-identite.png" alt="Logo et monogramme du Château de Cabanes" loading="lazy">
-          <img src="assets/work/chateau-cabanes-signaletique.png" alt="Déclinaison du logo Château de Cabanes sur une signalétique en pierre" loading="lazy">
+        <style>
+          #chateau-cabanes .cabanes-gallery{position:relative;background:#f8f0e4;overflow:hidden}
+          #chateau-cabanes .cabanes-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+          #chateau-cabanes .cabanes-track::-webkit-scrollbar{display:none}
+          #chateau-cabanes .cabanes-slide{flex:0 0 100%;height:min(70vw,670px);min-height:320px;display:grid;place-items:center;scroll-snap-align:start}
+          #chateau-cabanes .cabanes-slide img{display:block;width:100%;height:100%;object-fit:contain}
+          #chateau-cabanes .cabanes-control{position:absolute;top:50%;transform:translateY(-50%);border:1px solid #861b22;background:#f8f0e4e8;color:#861b22;width:42px;height:42px;cursor:pointer;font-size:24px;z-index:2}
+          #chateau-cabanes .cabanes-prev{left:12px}#chateau-cabanes .cabanes-next{right:12px}
+          #chateau-cabanes .cabanes-count{position:absolute;bottom:12px;right:16px;background:#f8f0e4e8;color:#861b22;padding:5px 10px;font-size:12px;letter-spacing:.12em}
+          @media(max-width:600px){#chateau-cabanes .cabanes-slide{height:480px;min-height:0}#chateau-cabanes .cabanes-control{width:34px;height:34px}}
+          @media(prefers-reduced-motion:reduce){#chateau-cabanes .cabanes-track{scroll-behavior:auto}}
+        </style>
+        <div class="cabanes-gallery" aria-label="Diaporama Château de Cabanes">
+          <div class="cabanes-track" id="cabanes-track">
+          <div class="cabanes-slide"><img src="assets/work/cabanes-01.webp" alt="Château de Cabanes — Identité graphique et monogramme" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-02.webp" alt="Château de Cabanes — Sceau de cire et papeterie" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-03.webp" alt="Château de Cabanes — Salle de bain et applications de marque" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-04.webp" alt="Château de Cabanes — Signalétique gravée dans la pierre" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-05.webp" alt="Château de Cabanes — Univers du bar" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-06.webp" alt="Château de Cabanes — Art de vivre au bord de la piscine" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-07.webp" alt="Château de Cabanes — Univers équestre" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-08.webp" alt="Château de Cabanes — Gastronomie et décoration" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-09.webp" alt="Château de Cabanes — Livre d’or et papeterie" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-10.webp" alt="Château de Cabanes — Événementiel et réception" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-11.webp" alt="Château de Cabanes — Cave à vin" loading="lazy"></div>
+          <div class="cabanes-slide"><img src="assets/work/cabanes-12.webp" alt="Château de Cabanes — Motifs graphiques et déclinaisons" loading="lazy"></div>
+          </div>
+          <button class="cabanes-control cabanes-prev" type="button" aria-label="Image précédente">‹</button>
+          <button class="cabanes-control cabanes-next" type="button" aria-label="Image suivante">›</button>
+          <span class="cabanes-count" aria-live="polite">01 / 12</span>
         </div>
+        <script>
+          (() => {
+            const gallery = document.querySelector('#chateau-cabanes .cabanes-gallery');
+            if (!gallery) return;
+            const track = gallery.querySelector('.cabanes-track');
+            const slides = [...gallery.querySelectorAll('.cabanes-slide')];
+            const count = gallery.querySelector('.cabanes-count');
+            let current = 0;
+            let timer;
+            const go = (n) => {
+              current = (n + slides.length) % slides.length;
+              track.scrollTo({left: current * track.clientWidth, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+              count.textContent = String(current + 1).padStart(2,'0') + ' / ' + slides.length;
+            };
+            const restart = () => {
+              clearInterval(timer);
+              if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(() => {if (!document.hidden && !gallery.matches(':hover') && !gallery.contains(document.activeElement)) go(current+1)}, 5500);
+            };
+            gallery.querySelector('.cabanes-prev').addEventListener('click', () => {go(current-1);restart()});
+            gallery.querySelector('.cabanes-next').addEventListener('click', () => {go(current+1);restart()});
+            track.addEventListener('scroll', () => {current=Math.round(track.scrollLeft / Math.max(1,track.clientWidth));count.textContent=String(current+1).padStart(2,'0')+' / '+slides.length}, {passive:true});
+            restart();
+          })();
+        </script>
         <figcaption class="logo-project-copy"><span class="logo-project-number">12</span><div><small>Domaine viticole · Monogramme &amp; signalétique</small><h2>Château de Cabanes</h2><p>Création d’une identité patrimoniale construite autour d’un monogramme réunissant les deux initiales du Château de Cabanes. Inscrit dans une géométrie inspirée des blasons et des sceaux, le signe exprime l’histoire du lieu, la précision et l’ancrage dans le monde du vin. La palette bordeaux évoque le domaine et la matière, tandis que la déclinaison gravée sur pierre transforme l’identité en véritable élément d’architecture. Le logo conserve ainsi sa force et sa lisibilité, de la papeterie à la signalétique du château.</p></div></figcaption>
       </figure>
 
