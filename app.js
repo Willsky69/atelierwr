@@ -89,7 +89,7 @@ const SEA_ARCHIVE = [
   { src: 'https://static.wixstatic.com/media/223f51_aa202512fa2d4b729643f5dfa2b2a4a1~mv2.png', cat: 'sea', title: 'Nu sur la plage', client: 'By the sea' },
   { src: 'https://static.wixstatic.com/media/223f51_806769c43c7c4fe0936af0e6c242bd48~mv2.jpg', cat: 'sea', title: 'Soleil orange', client: 'By the sea' },
   { src: 'https://static.wixstatic.com/media/223f51_96016d80bd474b5dafa5905980e25353~mv2.jpg', cat: 'sea', title: 'Instantané', client: 'By the sea' },
-  { src: 'https://static.wixstatic.com/media/223f51_d05aebadbfe047a98265c1e02c76514a~mv2.png', cat: 'sea', title: 'Baigneuse à la serviette', client: 'By the sea' },
+  { src: 'https://static.wixstatic.com/media/223f51_d05aebadbfe047a98265c1e02c76514a~mv2.png', cat: 'sea', title: 'Corps à corps', client: 'By the sea' },
   { src: 'https://static.wixstatic.com/media/223f51_af1e111d378c42c283965d509c210d91~mv2.jpg', cat: 'sea', title: 'Deux baigneuses', client: 'By the sea' },
   { src: 'https://static.wixstatic.com/media/223f51_b9e39b67c5264c7b97699e9565d8d408~mv2_d_2298_3553_s_2.jpg', cat: 'sea', title: 'Promenade sur la plage', client: 'By the sea' },
 ];
