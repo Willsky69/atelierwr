@@ -79,6 +79,9 @@
     <loc>https://atelierwr.net/contact.html</loc>
   </url>
   <url>
+    <loc>https://atelierwr.net/chateau-cabanes.html</loc>
+  </url>
+  <url>
     <loc>https://atelierwr.net/en/</loc>
   </url>
   <url>
@@ -95,6 +98,9 @@
   </url>
   <url>
     <loc>https://atelierwr.net/en/cartier</loc>
+  </url>
+  <url>
+    <loc>https://atelierwr.net/en/chateau-cabanes</loc>
   </url>
   <url>
     <loc>https://atelierwr.net/en/contact</loc>
@@ -164,11 +170,5 @@
   </url>
   <url>
     <loc>https://atelierwr.net/en/prendre-contact</loc>
-  </url>
-  <url>
-    <loc>https://atelierwr.net/enluminaires.html</loc>
-  </url>
-  <url>
-    <loc>https://atelierwr.net/chateau-cabanes.html</loc>
   </url>
 </urlset>
