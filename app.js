@@ -472,7 +472,7 @@ const INK_WORKS = [
   { src: "assets/ig/19-tour-cercle.jpg", title: "La tour du Cercle", client: "Illustration · Marseille" },
   { src: "assets/ig/18-terrasse-haute-cercle.jpg", title: "La terrasse haute du Cercle", client: "Illustration · Marseille" },
   { src: "assets/ig/17-au-soleil.jpg", title: "Au soleil", client: "Illustration · Marseille" },
-  { src: "assets/ig/16-port-malmousque.jpg", title: "Le port de Malmousque", client: "Illustration · Marseille" },
+  { src: "assets/ig/16-port-malmousque.jpg", title: "Le port de Malmousque", client: "Feutre et encre sur papier · A4 · 21 × 29,7 cm · Disponible sur commande" },
   { src: "assets/ig/15-baigneuses-rochers.jpg", title: "Baigneuses sur les rochers", client: "Illustration · Marseille" },
   { src: "assets/ig/14-marseille-bleu-orange.jpg", title: "Marseille, bleu et orange", client: "Illustration · Marseille" },
   { src: "assets/ig/13-coucher-soleil-marseille.jpg", title: "Marseille au soleil couchant", client: "Illustration · Marseille" },
