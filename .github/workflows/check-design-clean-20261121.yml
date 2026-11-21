@@ -1,0 +1,35 @@
+name: Vérifier le décor Design et création
+
+on:
+  push:
+    paths:
+      - ".github/workflows/check-design-clean-20261121.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Attendre et vérifier les pages publiées
+        shell: bash
+        run: |
+          set -euo pipefail
+          FR="https://atelierwr.net/design-creation.html?decor=20261121"
+          EN="https://atelierwr.net/en/design-creation.html?decor=20261121"
+          for i in $(seq 1 60); do
+            fr="$(curl -fsSL --max-time 30 "$FR" || true)"
+            en="$(curl -fsSL --max-time 30 "$EN" || true)"
+            if ! printf "%s" "$fr" | grep -q "geo-arc--" \
+              && ! printf "%s" "$fr" | grep -q "geo-line--v" \
+              && printf "%s" "$fr" | grep -q "geo-circle" \
+              && printf "%s" "$fr" | grep -q "geo-line--h" \
+              && ! printf "%s" "$en" | grep -q "geo-arc--" \
+              && ! printf "%s" "$en" | grep -q "geo-line--v"; then
+              echo "Le décor allégé est publié."
+              exit 0
+            fi
+            echo "Tentative $i/60 : déploiement en attente."
+            sleep 10
+          done
+          echo "La version publique attendue n'est pas encore disponible."
+          exit 1
